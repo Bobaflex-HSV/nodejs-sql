@@ -35,9 +35,9 @@ app.get("/:id", (req, res) => {
 // ***** STEP 8: POST / -> To create a new order *****
 /* TEST DATA
 {
-            "price": "666",
+            "price": "44",
             "date": "'2020-04-03 12:00:30'",
-            "user_id": 2
+            "user_id": 1
         }
 */
 
@@ -69,3 +69,11 @@ app.put("/:id", (req, res) => {
 
 
 // ***** STEP 10: DELETE  /:id : To delete one order (with the id)  *****
+app.delete("/:id", (req, res) => {
+    const { id } = req.params; 
+   
+    pool
+      .query('DELETE FROM orders WHERE id=$1;', [id])
+      .then(data => res.status(201).json(data))
+      .catch(e => res.sendStatus(404)); 
+   });
