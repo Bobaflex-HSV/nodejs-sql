@@ -10,7 +10,14 @@ const pool = new Pool({
  port: 5432,
 });
 
-app.get("/", (req, res) => res.send("hello world"));
+// ***** STEP 1 *****
+app.get("/", (req, res) => {
+    pool 
+      .query('SELECT * FROM users;')
+      .then(data => res.json(data))
+      .catch(e => res.sendStatus(404)); 
+  });
+  
 
-app.listen('3000', () => console.log('connected'));
+app.listen('3000', () => console.log('Connected to server localhost:3000...'));
 
