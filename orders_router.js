@@ -1,20 +1,23 @@
-const express = require("express");
-const app = express();
+var express = require('express')
+var router = express.Router()
 const bodyParser = require('body-parser')
 const pool = require('./database.js')
 
-app.use(bodyParser.json())
+router.use(bodyParser.json())
+
+
 
 // ***** STEP 6: GET  /  : get all orders *****
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
     pool 
       .query('SELECT * FROM orders;')
       .then(data => res.json(data))
       .catch(e => res.sendStatus(404)); 
 });
 
+
 // ***** STEP 7: GET  /:id :  To get one order (with the id)  *****
-app.get("/:id", (req, res) => {
+router.get("/:id", (req, res) => {
     const { id } = req.params; 
     pool
         .query('SELECT * FROM orders WHERE id=$1;', [id])
@@ -31,7 +34,7 @@ app.get("/:id", (req, res) => {
         }
 */
 
-app.post("/", (req, res) => {
+router.post("/", (req, res) => {
     const {price, date, user_id} = req.body;
      pool
        .query('INSERT INTO orders(price, date, user_id) values($1,$2,$3);', [price, date, user_id])
@@ -47,7 +50,7 @@ app.post("/", (req, res) => {
         }
 */
 
-app.put("/:id", (req, res) => {
+router.put("/:id", (req, res) => {
     const { id } = req.params; //retrieve id from the URL
     const { price, date, user_id } = req.body; //retrieve data from the form (body-parser)
    
@@ -59,7 +62,7 @@ app.put("/:id", (req, res) => {
 
 
 // ***** STEP 10: DELETE  /:id : To delete one order (with the id)  *****
-app.delete("/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
     const { id } = req.params; 
    
     pool
@@ -68,4 +71,4 @@ app.delete("/:id", (req, res) => {
       .catch(e => res.sendStatus(404)); 
    });
 
-app.listen('3000', () => console.log('Connected to server localhost:3000...'));
+module.exports = router
