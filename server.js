@@ -65,6 +65,16 @@ app.put("/:id", (req, res) => {
       .then(data => res.status(201).json(data))
       .catch(e => res.sendStatus(404)); 
    });
+
+// ***** STEP 5: DELETE  /:id : To delete one user (with the id) ***** 
+app.delete("/:id", (req, res) => {
+    const { id } = req.params; 
+   
+    pool
+      .query('DELETE FROM users WHERE id=$1;', [id])
+      .then(data => res.status(201).json(data))
+      .catch(e => res.sendStatus(404)); 
+   });
    
 
 
