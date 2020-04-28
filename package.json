@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-sql",
+  "version": "1.0.0",
+  "description": "Node JS and SQL Exercise",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bobaflex-HSV/nodejs-sql.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bobaflex-HSV/nodejs-sql/issues"
+  },
+  "homepage": "https://github.com/Bobaflex-HSV/nodejs-sql#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.0.3"
+  }
+}
