@@ -11,6 +11,7 @@ const pool = new Pool({
  port: 5432,
 });
 
+app.use(bodyParser.json())
 
 // ***** STEP 6: GET  /  : get all orders *****
 app.get("/", (req, res) => {
@@ -31,9 +32,21 @@ app.get("/:id", (req, res) => {
         .catch(e => res.sendStatus(404)); 
   });
 
-
-
-
 // ***** STEP 8: POST / -> To create a new order *****
+/* TEST DATA
+{
+            "price": "666",
+            "date": "'2020-04-03 12:00:30'",
+            "user_id": 2
+        }
+*/
+
+app.post("/", (req, res) => {
+    const {price, date, user_id} = req.body;
+     pool
+       .query('INSERT INTO orders(price, date, user_id) values($1,$2,$3);', [price, date, user_id])
+       .then(data => res.status(201).json(data))
+       .catch(e => res.sendStatus(404)); 
+    });
 // ***** STEP 9: PUT /:id  :  To edit one order (with the id) *****
 // ***** STEP 10: DELETE  /:id : To delete one order (with the id)  *****
