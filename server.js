@@ -18,6 +18,15 @@ app.get("/", (req, res) => {
       .catch(e => res.sendStatus(404)); 
   });
   
+  // ***** STEP 2 *****
+  app.get("/:id", (req, res) => {
+    const { id } = req.params; 
+    pool
+      .query('SELECT * FROM users WHERE id=$1;', [id])
+      .then(data => res.json(data)) 
+      .catch(e => res.sendStatus(404)); 
+   });
+   
 
 app.listen('3000', () => console.log('Connected to server localhost:3000...'));
 
