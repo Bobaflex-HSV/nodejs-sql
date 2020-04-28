@@ -30,7 +30,7 @@ app.get("/:id", (req, res) => {
       .catch(e => res.sendStatus(404)); 
 });
    
-// ***** STEP 3: POST / -> create a new user  *****
+4
 
 /* TEST DATA
 {
@@ -44,6 +44,24 @@ app.post("/", (req, res) => {
    const {first_name, last_name, age} = req.body;
     pool
       .query('INSERT INTO users(first_name, last_name, age) values($1,$2,$3);', [first_name, last_name, age])
+      .then(data => res.status(201).json(data))
+      .catch(e => res.sendStatus(404)); 
+   });
+
+// ***** STEP 4: PUT /:id  :  To edit one user (with the id)   *****
+/* TEST DATA
+    {
+                "first_name": "Gene",
+                "last_name": "Simmons",
+                "age": 70
+            }
+*/
+app.put("/:id", (req, res) => {
+    const { id } = req.params; //retrieve id from the URL
+    const { first_name, last_name, age } = req.body; //retrieve data from the form (body-parser)
+   
+    pool
+      .query('UPDATE users SET first_name=$1,last_name=$2,age=$3 WHERE id=$4;', [first_name, last_name, age, id]) 
       .then(data => res.status(201).json(data))
       .catch(e => res.sendStatus(404)); 
    });
