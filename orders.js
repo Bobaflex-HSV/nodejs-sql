@@ -49,4 +49,23 @@ app.post("/", (req, res) => {
        .catch(e => res.sendStatus(404)); 
     });
 // ***** STEP 9: PUT /:id  :  To edit one order (with the id) *****
+/* TEST DATA
+{
+            "price": "555",
+            "date": "'2020-04-03 12:00:30'",
+            "user_id": 2
+        }
+*/
+
+app.put("/:id", (req, res) => {
+    const { id } = req.params; //retrieve id from the URL
+    const { price, date, user_id } = req.body; //retrieve data from the form (body-parser)
+   
+    pool
+      .query('UPDATE orders SET price=$1,date=$2,user_id=$3 WHERE id=$4;', [price, date, user_id, id]) 
+      .then(data => res.status(201).json(data))
+      .catch(e => res.sendStatus(404)); 
+   });
+
+
 // ***** STEP 10: DELETE  /:id : To delete one order (with the id)  *****
